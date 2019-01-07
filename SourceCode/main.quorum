@@ -1,0 +1,76 @@
+use Libraries.Game.Game
+use Libraries.Interface.Events.KeyboardListener
+use Libraries.Interface.Events.KeyboardEvent
+use Libraries.Game.Graphics.DirectionalLight
+use Libraries.Game.Graphics.AmbientLight
+use Libraries.Game.Graphics.Drawable
+use Libraries.Game.Graphics.Camera
+use Libraries.Game.Graphics.Color
+use Libraries.Game.Graphics.Model
+use Libraries.Game.InputMonitor
+use Libraries.Compute.Vector3
+ 
+
+class Main is Game
+Camera camera = undefined
+DirectionalLight dl
+KeyboardEvent key
+InputMonitor im 
+AmbientLight al
+Drawable box
+Color color
+Model cube 
+Model cube2 
+Vector3 force 
+
+    action Main
+        StartGame()
+    end
+
+
+    action CreateGame
+        force:Set(0,9.8,0) 
+        EnablePhysics3D (true) 
+        camera = GetCamera3D()
+        al:SetColor(0.2354,0.2325,0,0.0002)
+        SetAmbientLight (al)
+        cube:LoadBox(1,1,3,color:Blue())
+        cube:SetPosition(0,2,0)
+        cube:EnablePhysics(true)
+        cube:SetResponsive()
+        cube:SetRestitution(0.5)
+        cube:SetFriction(5)
+        Add (cube)
+        dl:SetColor(0.8,0.8,0.8,1)
+        dl:SetDirection(camera:GetDirection())
+        Add(dl)
+        cube2:LoadBox(14,9,10,color:Green())
+        cube2:SetPosition(0,-7,0)
+        cube2:EnablePhysics (true)
+        cube2:SetUnmovable()
+        cube2:SetFriction(5)
+        Add (cube2)
+        SetGravity3D(0,-9.7,0)
+    end
+
+    action Update(number seconds)
+       
+
+       if im:IsKeyPressed (key:R)
+            cube:SetPosition (0,2,0)
+            cube:  
+       end 
+         if im:IsKeyPressed(key:S)
+           cube:ApplyForceToCenter(force)
+        end
+        if im:IsKeyPressed(key:A)
+           cube:Rotate(0,1,0,-1)
+        end
+        if im:IsKeyPressed(key:K)
+           cube:Rotate(1,0,0,-2)
+        end
+        if im:IsKeyPressed(key:L)
+           cube:Rotate(1,55,55,5)
+        end 
+    end
+end
